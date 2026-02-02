@@ -1,6 +1,11 @@
 # Prompt Analyzer
 
+[![GitHub](https://img.shields.io/badge/github-carbonbasednerd%2Fprompt--analyzer-blue?logo=github)](https://github.com/carbonbasednerd/prompt-analyzer)
+[![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
+
 A proof-of-concept system for recording AI agent instructions and detecting contradictions using locally running models.
+
+**Repository:** https://github.com/carbonbasednerd/prompt-analyzer
 
 ## Overview
 
