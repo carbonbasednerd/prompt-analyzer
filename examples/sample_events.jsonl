@@ -1,0 +1,6 @@
+{"schema_version": "1.0", "event_id": "evt_001", "session_id": "session_demo", "ts": "2026-02-02T10:00:00Z", "source": "user", "scope": "global", "text": "Never modify production files", "metadata": {}}
+{"schema_version": "1.0", "event_id": "evt_002", "session_id": "session_demo", "ts": "2026-02-02T10:05:00Z", "source": "user", "scope": "task", "text": "Update the production config file with new settings", "metadata": {}}
+{"schema_version": "1.0", "event_id": "evt_003", "session_id": "session_demo", "ts": "2026-02-02T10:10:00Z", "source": "system", "scope": "global", "text": "Use verbose logging for all operations", "metadata": {}}
+{"schema_version": "1.0", "event_id": "evt_004", "session_id": "session_demo", "ts": "2026-02-02T10:15:00Z", "source": "user", "scope": "file", "text": "Keep output minimal for this file", "metadata": {}}
+{"schema_version": "1.0", "event_id": "evt_005", "session_id": "session_demo", "ts": "2026-02-02T10:20:00Z", "source": "developer", "scope": "global", "text": "Do not access external APIs", "metadata": {}}
+{"schema_version": "1.0", "event_id": "evt_006", "session_id": "session_demo", "ts": "2026-02-02T10:25:00Z", "source": "user", "scope": "task", "text": "Fetch the latest documentation from the external API", "metadata": {}}

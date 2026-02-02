@@ -1,0 +1,2 @@
+{"schema_version": "1.0", "conflict_id": "cfl_001", "session_id": "session_demo", "claims": ["clm_001", "clm_002"], "severity": "hard", "explanation": "Contradictory instructions: must_not file_write vs must file_write on 'production files'", "confidence": 0.925}
+{"schema_version": "1.0", "conflict_id": "cfl_002", "session_id": "session_demo", "claims": ["clm_005", "clm_006"], "severity": "hard", "explanation": "Contradictory instructions: must_not internet_access vs must internet_access on 'external APIs'", "confidence": 0.92}

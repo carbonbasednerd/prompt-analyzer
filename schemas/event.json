@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://prompt-analyzer.example.com/schemas/event.json",
+  "title": "Instruction Event",
+  "description": "An instruction event captured in the ledger",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "description": "Schema version for future compatibility",
+      "default": "1.0"
+    },
+    "event_id": {
+      "type": "string",
+      "description": "Unique event identifier"
+    },
+    "session_id": {
+      "type": "string",
+      "description": "Session identifier"
+    },
+    "ts": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when event was created"
+    },
+    "source": {
+      "type": "string",
+      "enum": ["system", "developer", "user", "memory", "claude_md", "skill", "tool_output", "agent_internal"],
+      "description": "Source of the instruction"
+    },
+    "scope": {
+      "type": "string",
+      "enum": ["global", "conversation", "task", "step", "file"],
+      "description": "Scope at which instruction applies"
+    },
+    "text": {
+      "type": "string",
+      "description": "Raw instruction text"
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Additional metadata",
+      "additionalProperties": true
+    }
+  },
+  "required": ["event_id", "session_id", "ts", "source", "scope", "text"]
+}

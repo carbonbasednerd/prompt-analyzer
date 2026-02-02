@@ -1,0 +1,97 @@
+version: '3.8'
+
+services:
+  ollama:
+    image: ollama/ollama:latest
+    volumes:
+      - ollama_data:/root/.ollama
+    ports:
+      - "11434:11434"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:11434/api/tags"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    entrypoint: >
+      /bin/sh -c "
+      ollama serve &
+      sleep 5 &&
+      ollama pull llama3.1:8b &&
+      wait
+      "
+    networks:
+      - prompt-analyzer-network
+
+  ledger:
+    build:
+      context: ./services/ledger
+      dockerfile: Dockerfile
+    ports:
+      - "8001:8000"
+    volumes:
+      - ./data:/data
+    environment:
+      - DATA_DIR=/data/ledger
+      - LOG_LEVEL=INFO
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 5s
+      timeout: 3s
+      retries: 3
+    networks:
+      - prompt-analyzer-network
+
+  extractor:
+    build:
+      context: ./services/extractor
+      dockerfile: Dockerfile
+    ports:
+      - "8002:8000"
+    depends_on:
+      ollama:
+        condition: service_healthy
+    environment:
+      - OLLAMA_HOST=http://ollama:11434
+      - MODEL=llama3.1:8b
+      - LOG_LEVEL=INFO
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 5s
+      timeout: 3s
+      retries: 3
+    networks:
+      - prompt-analyzer-network
+
+  monitor:
+    build:
+      context: ./services/monitor
+      dockerfile: Dockerfile
+    ports:
+      - "8003:8000"
+    depends_on:
+      ledger:
+        condition: service_healthy
+      extractor:
+        condition: service_healthy
+    volumes:
+      - ./data:/data
+    environment:
+      - LEDGER_URL=http://ledger:8000
+      - EXTRACTOR_URL=http://extractor:8000
+      - DATA_DIR=/data
+      - POLL_INTERVAL=5
+      - LOG_LEVEL=INFO
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 5s
+      timeout: 3s
+      retries: 3
+    networks:
+      - prompt-analyzer-network
+
+volumes:
+  ollama_data:
+
+networks:
+  prompt-analyzer-network:
+    name: prompt-analyzer-network
